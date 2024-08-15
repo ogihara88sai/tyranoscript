@@ -667,41 +667,45 @@ tyrano.plugin.kag.tag.playbgm = {
         analyser.connect(audio_context.destination);
         analyser.fftSize = 32;
         const buffer_length = analyser.frequencyBinCount;
-        const data_array = new Uint8Array(buffer_length);
+        const frequency_data_array = new Uint8Array(buffer_length);
+
         const analyze = () => {
             // 経過時間
             const timestamp = performance.now();
             const elapsed_time = timestamp - last_timestamp;
-            // 振幅のサンプリングデータをdata_arrayに格納する
-            analyser.getByteTimeDomainData(data_array);
-            // 振幅の最大値を計算する
+
+            // 周波数データをfrequency_data_arrayに格納する
+            analyser.getByteFrequencyData(frequency_data_array);
+
+            // 周波数データの最大値を計算する
             let max = 0;
             for (let i = 0; i < buffer_length; i++) {
-                if (data_array[i] > max) {
-                    max = data_array[i];
-                    if (max === 255) {
-                        break;
-                    }
+                if (frequency_data_array[i] > max) {
+                    max = frequency_data_array[i];
                 }
             }
+
             // 振幅を0～100に補正してリップシンクメソッドに渡す
-            max = Math.max(128, max);
-            const volume = (((max - 128) / (255 - 128)) * 100) | 0;
+            const volume = ((max / 255) * 100) | 0;
+            console.error(volume);
             this.kag.chara.updateLipSyncWithVoice(volume, target_parts, elapsed_time);
+
             // 無音の経過時間を計算
-            // 既定時間無音だった場合は波形分析を中断する
-            if (max <= 128) {
+            if (max === 0) {
                 silent_time += elapsed_time;
             } else {
                 // 音が鳴っている場合、無音時間をリセット
                 silent_time = 0;
             }
+
             if (silent_time >= max_silent_duration) {
                 resetFrameOpacity();
                 return;
             }
+
             // 現在のタイムスタンプを保存
             last_timestamp = timestamp;
+
             // 次回の波形分析を呼ぶ
             animation_id = requestAnimationFrame(analyze);
         };

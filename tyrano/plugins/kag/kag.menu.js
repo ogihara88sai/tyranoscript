@@ -785,6 +785,7 @@ tyrano.plugin.kag.menu = {
         }
 
         // [wait]中にロードされた場合の対策
+        // waitをキャンセルする
         clearTimeout(this.kag.tmp.wait_id);
         this.kag.tmp.wait_id = "";
         this.kag.stat.is_wait = false;

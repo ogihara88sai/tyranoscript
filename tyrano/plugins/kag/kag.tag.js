@@ -631,7 +631,6 @@ tyrano.plugin.kag.ftag = {
                     }
                 }
             } else {
-                
             }
         }
 
@@ -1049,7 +1048,7 @@ tyrano.plugin.kag.tag.text = {
             }
         }
     },
-    
+
     /**
      * テキストを表示する統括的な処理
      * @param {string} message_str 表示するテキスト
@@ -1669,7 +1668,7 @@ tyrano.plugin.kag.tag.text = {
             j_msg_inner.css("width", width);
             j_msg_inner.css("height", height);
         }
-        
+
         //
         // アウターの位置を決定する
         // まずキャラ画像の left, top にふきだし設定の left, top を足す
@@ -5153,7 +5152,6 @@ tyrano.plugin.kag.tag.wait_cancel = {
         this.kag.cancelStrongStop();
         this.kag.stat.is_wait = false;
         this.kag.cancelWeakStop();
-
         this.kag.ftag.nextOrder();
     },
 };
@@ -7074,7 +7072,7 @@ tyrano.plugin.kag.tag.glink = {
         face: "",
         bold: "",
         keyfocus: "",
-        autopos:"false",
+        autopos: "false",
     },
 
     //イメージ表示レイヤ。メッセージレイヤのように扱われますね。。
@@ -7091,7 +7089,7 @@ tyrano.plugin.kag.tag.glink = {
         j_button.css("font-size", pm.size + "px");
         that.kag.setElmCursor(j_button, "pointer");
         that.kag.makeFocusable(j_button, pm.keyfocus);
-        
+
         //強制自動配置が有効な場合
         if (pm.autopos == "true") {
             pm.x = "auto";
@@ -7144,7 +7142,7 @@ tyrano.plugin.kag.tag.glink = {
         } else if (that.kag.stat.font.face != "") {
             j_button.css("font-family", that.kag.stat.font.face);
         }
-        
+
         if (pm.x == "auto") {
             var sc_width = parseInt(that.kag.config.scWidth);
             var center = Math.floor(parseInt(j_button.css("width")) / 2);
